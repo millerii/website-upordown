@@ -2,6 +2,7 @@
 
 import requests
 
+
 def check_site(url):
 	try:
 		response = requests.get(url)
@@ -10,7 +11,7 @@ def check_site(url):
 	except requests.exceptions.MissingSchema:
 		print("Invalid url-address")
 	except requests.exceptions.RequestException as e:
-		print("Other request proplem: ", type(e) + "\n", e)
+		print("Other request problem: ", type(e), "\n", e)
 	except Exception as e:
 		print(type(e))
 	else:
@@ -18,11 +19,15 @@ def check_site(url):
 		return response.status_code
 
 
-site_url = "https://crossfitjyvaskyla.it-opas.fi"
+def main():
+	site_url = input("Enter website URL: ")
 
-response = check_site(site_url)
+	response = check_site(site_url)
+	if response == 200:
+		print("site found: ", response)
+	else:
+		print("Error:", response)
 
-if response == 200:
-	print("site found: ", response)
-else:
-	print("Error:", response)
+
+if __name__ == "__main__":
+	main()
