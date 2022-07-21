@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import requests
+from sys import argv
 
 
 def check_site(url):
@@ -20,11 +21,19 @@ def check_site(url):
 
 
 def main():
-	site_url = input("Enter website URL: ")
+	try:  # Check if url is provided as argument
+		site_url = argv[1]
+	except IndexError:
+		site_url = input("Enter website URL: ")
+
+	if not site_url.startswith("http"):  # Verify that url starts with 'http'
+		print("URL entered without http or https prefix.")
+		print("URL changed to", "https://" + site_url)
+		site_url = "https://" + site_url
 
 	response = check_site(site_url)
 	if response == 200:
-		print("site found: ", response)
+		print("*** Site found, response code:", response, "***")
 	else:
 		print("Error:", response)
 
